@@ -1,17 +1,29 @@
 
-import numpy as np
-
-x = 3
-print(x)
+# import numpy as np
 
 def start_menu():
     while True:
         svar = input("""
-                    välj ett av nedan alternativ 
+                    \n välj ett av nedan alternativ 
                     \n 1. kryptera  ord/meddelande 
                     \n 2. dekryptera ord/meddelande
                     \n 3. se antalet krypterade ord/meddelande
                     \n 4. avsluta programmet
                     """)
-        print(svar)
+
+        if svar == "1":
+            shift = int(input("Ange antal steg för förskjutning i alfabetet"))
+
+            print("kryptera")
+        elif svar == "2":
+            print("dekryptera")
+        elif svar == "3":
+            print("antalet meddelande")
+        elif svar == "4":
+            break
+        else:
+            print("Ogiltig inmatning, försök igen")
+
 start_menu()
+
+
