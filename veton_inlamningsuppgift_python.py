@@ -7,8 +7,10 @@ import numpy as np
 
 # Funktionen skapar ett krypterat alfabet baserat på antalet förskjutningar (shift)
 def omvandling_till_krypterat_alfabet(shift):
-    # skapar NumPy-array med alla engelska bokstäver (små och stora) baserat på intervaller tillhörande ASCII-värden
-    alfabet = np.array([chr(i) for i in range(97, 123)] + [chr(i) for i in range(65, 91)])
+    # skapar NumPy-array med alla engelska och svenska bokstäver (små och stora) baserat på intervaller tillhörande ASCII-värden
+    alfabet = np.array(
+        [chr(i) for i in range(97, 123)] + ['å', 'ä', 'ö'] +
+        [chr(i) for i in range(65, 91)] + ['Å', 'Ä', 'Ö'])
     # alfabetet förskjuts beroende på antalet angivna shift, ett nytt alfabete skapas baserat på antalet angivna shift
     forskjutet_alfabet = np.roll(alfabet, -shift)
     # "alfabetet" inkl. det manipulerade alfabetet (forskjutet_alfabet) sätts samman parvis för att konverteras till dictionary
@@ -37,18 +39,18 @@ def dekryptering(meddelande, shift):
     # returnerar dekrypterat_meddelande
     return dekrypterat_meddelande
 
-# funktionen säkerställer att användaren anger giltig inmatning (1-25) enligt cesar-kryptering för det engelska alfabetet.
+# funktionen säkerställer att användaren anger giltig inmatning (1-28) enligt cesar-kryptering för det engelska alfabetet.
 def giltig_inmatning():
     # oändlig loop, körs till ett giltigt värde har erhållits och funktionen returnerar ett värde.
     while True:
         # try-sats för felhantering och undantag. Om fel/undantag uppstår anropas except ValueError.
         try:
             # if-sats med vilkorskontroll
-            shift = int(input("Ange antal steg för förskjutning i alfabetet (1-25): "))
-            if 1 <= shift <= 25:
+            shift = int(input("Ange antal steg för förskjutning i alfabetet (1-28): "))
+            if 1 <= shift <= 28:
                 return shift
             else:
-                print("Ogiltigt antal. Vänligen ange ett tal mellan 1 och 25.")
+                print("Ogiltigt antal. Vänligen ange ett tal mellan 1 och 28.")
         except ValueError:
             print("Ogiltig inmatning. Ange ett heltal.")
 
@@ -94,7 +96,7 @@ def start_menu():
             meddelande = input("Ange meddelandet du önskar kryptera: ")
             # anropar funktionen kryptering med användarens meddelande och shift-värde, och sparar det krypterade meddelandet i variabeln krypterat
             krypterat = kryptering(meddelande, shift)
-            # lägger till en tuple bestående av det krypterade meddelandet och shift-värdet i listan krypterade_meddelanden
+            # lägger till en tuple bestående av det krypterade meddelandet och shift-värdet i listan "krypterade_meddelanden"
             krypterade_meddelanden.append((krypterat, shift))
             # skriver ut det ursprungliga meddelandet, det krypterade meddelandet, och det använda shift-värdet till användaren
             print(f"Ditt angivna meddelande: '{meddelande}', har krypterats till: '{krypterat}' med en förskjutning på {shift}")
@@ -129,8 +131,9 @@ def start_menu():
 
         # kontrollerar om användaren valt alternativ 3, vilket är att se antalet krypterade meddelanden
         elif svar == "3":
-            # skriver ut det totala antalet krypterade meddelanden och listar dem
+            # skriver ut det totala antalet krypterade meddelanden och listar dem med hjälp av funktionen "len()" som returnerar storleken på listan
             print(f"Antal krypterade meddelanden: {len(krypterade_meddelanden)}")
+            # samma som ovan (elif svar == "2")
             for idx, msg in enumerate(krypterade_meddelanden, 1):
                 print(f"{idx}. {msg}")
 
